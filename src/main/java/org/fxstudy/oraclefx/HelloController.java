@@ -18,8 +18,10 @@ public class HelloController {
     public TextArea chat;
     public TextArea prediction;
     public TextArea card;
-    public TextArea ascii;
+    public TextArea ascii1;
     public TextField questionField;
+    public TextArea ascii2;
+    public TextArea ascii3;
     private String userQuestion;
 
     Path welcomeText = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\TextOracle");
@@ -86,8 +88,8 @@ public class HelloController {
             All all = new All();
             String cardText = all.getAllCard();
             String predictionText = all.getAllPrediction();
-            ascii.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii.setText(all.getAsciiArt());
+            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii1.setText(all.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
             });
@@ -108,8 +110,8 @@ public class HelloController {
             Major major = new Major();
             String cardText = major.getMajorCard();
             String predictionText = major.getMajorPrediction();
-            ascii.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii.setText(major.getAsciiArt());
+            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii1.setText(major.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
             });
@@ -132,10 +134,62 @@ public class HelloController {
             All all = new All();
             String cardText = all.getAllCard();
             String userPredictionText = "На вопрос \"" + userQuestion + "\" карты отвечают: " + all.getAllUserPrediction();
-            ascii.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii.setText(all.getAsciiArt());
+            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii1.setText(all.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, userPredictionText, null);
+            });
+        });
+    }
+
+    @FXML
+    protected void pressAllX3() {
+        List<String> text;
+        try {
+            text = Files.readAllLines(welcomeText);
+        } catch (IOException e) {
+            chat.setText("Не удалось загрузить текст предсказания.");
+            return;
+        }
+        String introText = text.get(1);
+        animateText(chat, introText, () -> {
+            All all = new All();
+            String cardsText = all.getAllCardsX3();
+            String predictionText = all.getAllPredictionsX3();
+            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii2.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii3.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii1.setText(all.getAllAsciiX3(1));
+            ascii2.setText(all.getAllAsciiX3(2));
+            ascii3.setText(all.getAllAsciiX3(3));
+            animateText(card, cardsText, () -> {
+                animateText(prediction, predictionText, null);
+            });
+        });
+    }
+
+    @FXML
+    protected void pressMajorX3() {
+        List<String> text;
+        try {
+            text = Files.readAllLines(welcomeText);
+        } catch (IOException e) {
+            chat.setText("Не удалось загрузить текст предсказания");
+            return;
+        }
+        String introText = text.get(1);
+        animateText(chat, introText, () -> {
+            Major major = new Major();
+            String cardsText = major.getMajorCardsX3();
+            String predictionsText = major.getMajorPredictionsX3();
+            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii2.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii3.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+            ascii1.setText(major.getMajorAsciiX3(1));
+            ascii2.setText(major.getMajorAsciiX3(2));
+            ascii3.setText(major.getMajorAsciiX3(3));
+            animateText(card, cardsText, () -> {
+                animateText(prediction, predictionsText, null);
             });
         });
     }
