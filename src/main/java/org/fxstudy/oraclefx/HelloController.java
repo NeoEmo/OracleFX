@@ -8,11 +8,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Objects;
 
 public class HelloController {
     public TextArea chat;
@@ -24,10 +25,15 @@ public class HelloController {
     public TextArea ascii3;
     private String userQuestion;
 
-    Path welcomeText = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\TextOracle");
+    private List<String> welcomeLines;
     Timeline currentTimeLine;
 
     public void initialize() {
+        try (InputStream is = getClass().getResourceAsStream("/org/fxstudy/oraclefx/TextOracle")) {
+            welcomeLines = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is))).lines().toList();
+        } catch (NullPointerException | IOException e) {
+            welcomeLines = List.of("Ошибка загрузки текста.");
+        }
         welcome();
     }
 
@@ -59,27 +65,13 @@ public class HelloController {
     }
 
     private void animateIntro(Runnable onFinished) {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String introText = text.get(1);
+        String introText = welcomeLines.get(1);
         animateText(chat, introText, onFinished);
     }
 
     @FXML
     protected void welcome() {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String welcomeTxt = text.getFirst();
+        String welcomeTxt = welcomeLines.getFirst();
 
         chat.setEditable(false);
         animateText(chat,welcomeTxt, null);

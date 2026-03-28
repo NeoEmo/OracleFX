@@ -1,27 +1,27 @@
 package org.fxstudy.oraclefx;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Major {
-    private List<String> listOfCards;
-    private List<String> listOfMajorPrediction;
-    private List<String> listOfAscii;
+    private final List<String> listOfCards;
+    private final List<String> listOfMajorPrediction;
+    private final List<String> listOfAscii;
     private List<String> asciiArts;
-    private List<String> listOfMajorPredictionX3;
+    private final List<String> listOfMajorPredictionX3;
     private int firstCard;
     private int secondCard;
     private int thirdCard;
 
-    Path cards = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\Cards");
-    Path MajorPrediction = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\MajorPrediction");
-    Path ascii = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AsciiCards");
-    Path majorPredictionX3 = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AllPredictionX3");
+    InputStream cards = getClass().getResourceAsStream("/org/fxstudy/oraclefx/Cards");
+    InputStream majorPrediction = getClass().getResourceAsStream("/org/fxstudy/oraclefx/MajorPrediction");
+    InputStream ascii = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AsciiCards");
+    InputStream majorPredictionX3 = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AllPredictionX3");
 
 
     public Major() {
@@ -45,30 +45,21 @@ public class Major {
             thirdCard = thirdCard - 22;
         }
 
-        try {
-            this.listOfCards = Files.readAllLines(cards);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с картами");
-            return;
-        }
-        try {
-            this.listOfMajorPrediction = Files.readAllLines(MajorPrediction);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с предсказаниями");
-            return;
-        }
-        try {
-            this.listOfAscii = Files.readAllLines(ascii);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с артами");
-            return;
-        }
-        try {
-            this.listOfMajorPredictionX3 = Files.readAllLines(majorPredictionX3);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл тремя предсказаниями");
-            return;
-        }
+        listOfCards = new BufferedReader(new InputStreamReader(Objects.requireNonNull(cards)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfMajorPrediction = new BufferedReader(new InputStreamReader(Objects.requireNonNull(majorPrediction)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfAscii = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ascii)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfMajorPredictionX3 = new BufferedReader(new InputStreamReader(Objects.requireNonNull(majorPredictionX3)))
+                .lines()
+                .collect(Collectors.toList());
     }
 
     private void loadAsciiArts() {

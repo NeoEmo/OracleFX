@@ -1,29 +1,29 @@
 package org.fxstudy.oraclefx;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class All {
-    private List<String> listOfCards;
-    private List<String> listOfAllPrediction;
-    private List<String> listOfAscii;
+    private final List<String> listOfCards;
+    private final List<String> listOfAllPrediction;
+    private final List<String> listOfAscii;
     private List<String> asciiArts;
-    private List<String> listOfAllUserPrediction;
-    private List<String> listOfAllPredictionX3;
+    private final List<String> listOfAllUserPrediction;
+    private final List<String> listOfAllPredictionX3;
     private int firstCard;
     private int secondCard;
     private int thirdCard;
 
-    Path cards = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\Cards");
-    Path allPrediction = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AllPrediction");
-    Path ascii = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AsciiCards");
-    Path allUserPrediction = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AllUserPrediction");
-    Path allPredictionX3 = Paths.get("src\\main\\resources\\org\\fxstudy\\oraclefx\\AllPredictionX3");
+    InputStream cards = getClass().getResourceAsStream("/org/fxstudy/oraclefx/Cards");
+    InputStream allPrediction = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AllPrediction");
+    InputStream ascii = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AsciiCards");
+    InputStream allUserPrediction = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AllUserPrediction");
+    InputStream allPredictionX3 = getClass().getResourceAsStream("/org/fxstudy/oraclefx/AllPredictionX3");
 
     public All(){
         this.firstCard = (int) (Math.random() * 78);
@@ -46,36 +46,25 @@ public class All {
             thirdCard = thirdCard - 78;
         }
 
-        try {
-            this.listOfCards = Files.readAllLines(cards);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с картами");
-            return;
-        }
-        try {
-            this.listOfAllPrediction = Files.readAllLines(allPrediction);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с предсказаниями");
-            return;
-        }
-        try {
-            this.listOfAscii = Files.readAllLines(ascii);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с артами");
-            return;
-        }
-        try {
-            this.listOfAllUserPrediction = Files.readAllLines(allUserPrediction);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с пользовательскими предсказаниями");
-            return;
-        }
-        try {
-            this.listOfAllPredictionX3 = Files.readAllLines(allPredictionX3);
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл с тремя предсказаниями");
-            return;
-        }
+        listOfCards = new BufferedReader(new InputStreamReader(Objects.requireNonNull(cards)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfAllPrediction = new BufferedReader(new InputStreamReader(Objects.requireNonNull(allPrediction)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfAscii = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ascii)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfAllUserPrediction = new BufferedReader(new InputStreamReader(Objects.requireNonNull(allUserPrediction)))
+                .lines()
+                .collect(Collectors.toList());
+
+        listOfAllPredictionX3 = new BufferedReader(new InputStreamReader(Objects.requireNonNull(allPredictionX3)))
+                .lines()
+                .collect(Collectors.toList());
     }
 
     private void loadAsciiArts() {
