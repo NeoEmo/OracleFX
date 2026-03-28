@@ -11,6 +11,23 @@
     -fx-alignment: center;
     -fx-background-color: grey;
 }
+
 .text-area .scroll-pane .viewport {
+    -fx-alignment: center;
+}
+
+#chat {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+#ascii1, #ascii2, #ascii3 {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 14px;
+}
+
+
+#card, #prediction {
     -fx-alignment: center;
 }
