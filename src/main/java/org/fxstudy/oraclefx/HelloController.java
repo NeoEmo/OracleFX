@@ -58,6 +58,18 @@ public class HelloController {
         timeline.play();
     }
 
+    private void animateIntro(Runnable onFinished) {
+        List<String> text;
+        try {
+            text = Files.readAllLines(welcomeText);
+        } catch (IOException e) {
+            chat.setText("Не удалось загрузить текст предсказания.");
+            return;
+        }
+        String introText = text.get(1);
+        animateText(chat, introText, onFinished);
+    }
+
     @FXML
     protected void welcome() {
         List<String> text;
@@ -69,26 +81,16 @@ public class HelloController {
         }
         String welcomeTxt = text.getFirst();
 
-        chat.setStyle("-fx-padding: 0; -fx-background-insets: 0; -fx-border-width: 0;");
         chat.setEditable(false);
         animateText(chat,welcomeTxt, null);
     }
 
     @FXML
     protected void pressAll() {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String introText = text.get(1);
-        animateText(chat, introText, () -> {
+        animateIntro(() -> {
             All all = new All();
             String cardText = all.getAllCard();
             String predictionText = all.getAllPrediction();
-            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
             ascii1.setText(all.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
@@ -98,19 +100,10 @@ public class HelloController {
 
     @FXML
     protected void pressMajor() {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String introText = text.get(1);
-        animateText(chat, introText, () -> {
+        animateIntro(() -> {
             Major major = new Major();
             String cardText = major.getMajorCard();
             String predictionText = major.getMajorPrediction();
-            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
             ascii1.setText(major.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
@@ -122,19 +115,11 @@ public class HelloController {
         userQuestion = questionField.getText();
         questionField.clear();
         questionField.setPromptText("Вопрос принят");
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String introText = text.get(1);
-        animateText(chat, introText, () -> {
+        animateIntro(() -> {
             All all = new All();
             String cardText = all.getAllCard();
             String userPredictionText = "На вопрос \"" + userQuestion + "\" карты отвечают: " + all.getAllUserPrediction();
-            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
+
             ascii1.setText(all.getAsciiArt());
             animateText(card, cardText, () -> {
                 animateText(prediction, userPredictionText, null);
@@ -144,21 +129,10 @@ public class HelloController {
 
     @FXML
     protected void pressAllX3() {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания.");
-            return;
-        }
-        String introText = text.get(1);
-        animateText(chat, introText, () -> {
+        animateIntro(() -> {
             All all = new All();
             String cardsText = all.getAllCardsX3();
             String predictionText = all.getAllPredictionsX3();
-            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii2.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii3.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
             ascii1.setText(all.getAllAsciiX3(1));
             ascii2.setText(all.getAllAsciiX3(2));
             ascii3.setText(all.getAllAsciiX3(3));
@@ -170,21 +144,10 @@ public class HelloController {
 
     @FXML
     protected void pressMajorX3() {
-        List<String> text;
-        try {
-            text = Files.readAllLines(welcomeText);
-        } catch (IOException e) {
-            chat.setText("Не удалось загрузить текст предсказания");
-            return;
-        }
-        String introText = text.get(1);
-        animateText(chat, introText, () -> {
+        animateIntro(() -> {
             Major major = new Major();
             String cardsText = major.getMajorCardsX3();
             String predictionsText = major.getMajorPredictionsX3();
-            ascii1.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii2.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
-            ascii3.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 14px;");
             ascii1.setText(major.getMajorAsciiX3(1));
             ascii2.setText(major.getMajorAsciiX3(2));
             ascii3.setText(major.getMajorAsciiX3(3));

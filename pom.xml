@@ -6,7 +6,7 @@
 
     <groupId>org.FXStudy</groupId>
     <artifactId>OracleFX</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4-RELEASE</version>
     <name>OracleFX</name>
 
     <properties>
