@@ -51,22 +51,52 @@
                     <target>25</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
+                <configuration>
+                    <mainClass>org.fxstudy.oraclefx.HelloApplication</mainClass>
+                </configuration>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
-                        <id>default-cli</id>
+                        <id>jlink</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
                         <configuration>
-                            <mainClass>org.fxstudy.oraclefx/org.fxstudy.oraclefx.HelloApplication</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <launcher>OracleFX</launcher>
+                            <jlinkImageName>OracleFX</jlinkImageName>
+                            <noHeaderFiles>true</noHeaderFiles>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>jpackage</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jpackage</goal>
+                        </goals>
+                        <configuration>
+                            <type>APP_IMAGE</type>
+                            <name>OracleFX</name>
+                            <input>${project.build.directory}/jlink/OracleFX</input>
+                            <mainClass>org.fxstudy.oraclefx.HelloApplication</mainClass>
+                            <destination>${project.build.directory}/installer</destination>
+                            <vendor>YourVendor</vendor>
+                            <copyright>2026</copyright>
+                            <winConsole>false</winConsole>
                         </configuration>
                     </execution>
                 </executions>
