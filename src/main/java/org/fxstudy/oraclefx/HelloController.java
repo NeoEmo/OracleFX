@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
@@ -19,10 +20,10 @@ public class HelloController {
     public TextArea chat;
     public TextArea prediction;
     public TextArea card;
-    public TextArea ascii1;
+    public Label ascii1;
     public TextField questionField;
-    public TextArea ascii2;
-    public TextArea ascii3;
+    public Label ascii2;
+    public Label ascii3;
     private String userQuestion;
 
     private List<String> welcomeLines;
@@ -83,7 +84,9 @@ public class HelloController {
             All all = new All();
             String cardText = all.getAllCard();
             String predictionText = all.getAllPrediction();
-            ascii1.setText(all.getAsciiArt());
+            ascii1.setText("");
+            ascii2.setText(all.getAsciiArt());
+            ascii3.setText("");
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
             });
@@ -96,7 +99,9 @@ public class HelloController {
             Major major = new Major();
             String cardText = major.getMajorCard();
             String predictionText = major.getMajorPrediction();
-            ascii1.setText(major.getAsciiArt());
+            ascii1.setText("");
+            ascii2.setText(major.getAsciiArt());
+            ascii3.setText("");
             animateText(card, cardText, () -> {
                 animateText(prediction, predictionText, null);
             });
@@ -112,7 +117,9 @@ public class HelloController {
             String cardText = all.getAllCard();
             String userPredictionText = "На вопрос \"" + userQuestion + "\" карты отвечают: " + all.getAllUserPrediction();
 
-            ascii1.setText(all.getAsciiArt());
+            ascii1.setText("");
+            ascii2.setText(all.getAsciiArt());
+            ascii3.setText("");
             animateText(card, cardText, () -> {
                 animateText(prediction, userPredictionText, null);
             });

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fxstudy.oraclefx.HelloController">
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fxstudy.oraclefx.HelloController">
    <bottom>
         <HBox alignment="CENTER" spacing="10.0">
             <Button onAction="#pressAll" text="All" />
@@ -21,13 +27,16 @@
             <TextArea fx:id="prediction" editable="false" prefHeight="350.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER" />
         </VBox>
     </right>
-   <center>
-       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="250.0" BorderPane.alignment="CENTER">
-            <TextArea fx:id="ascii1" editable="false" prefHeight="200.0" prefWidth="250.0" />
-            <TextArea fx:id="ascii2" editable="false" prefHeight="200.0" prefWidth="200.0" />
-            <TextArea fx:id="ascii3" editable="false" prefHeight="200.0" prefWidth="200.0" />
-       </VBox>
-   </center>
+    <center>
+        <VBox alignment="CENTER" spacing="5">
+            <Label fx:id="ascii1" VBox.vgrow="ALWAYS" />
+            <Label fx:id="ascii2" VBox.vgrow="ALWAYS" />
+            <Label fx:id="ascii3" VBox.vgrow="ALWAYS" />
+         <BorderPane.margin>
+            <Insets left="600.0" />
+         </BorderPane.margin>
+        </VBox>
+    </center>
    <left>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </left>

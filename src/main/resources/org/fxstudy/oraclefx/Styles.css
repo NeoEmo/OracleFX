@@ -16,6 +16,20 @@
     -fx-alignment: center;
 }
 
+.label {
+    -fx-text-fill: white;
+    -fx-background-color: grey;
+}
+
+.label .content {
+    -fx-alignment: center;
+    -fx-background-color: grey;
+}
+
+.label .scroll-pane .viewport {
+    -fx-alignment: center;
+}
+
 #chat {
     -fx-padding: 0;
     -fx-background-insets: 0;

@@ -25,24 +25,18 @@ public class Major {
 
 
     public Major() {
-        this.firstCard = (int) (Math.random() * 22);
-        this.secondCard = (int) (Math.random() * 22);
-        this.thirdCard = (int) (Math.random() * 22);
+        this.firstCard  = (int) (Math.random() * 22) + 1;
+        this.secondCard = (int) (Math.random() * 22) + 1;
+        this.thirdCard  = (int) (Math.random() * 22) + 1;
 
-        if(firstCard == secondCard) {
-            int index = (int) (Math.random() * 10);
-            secondCard = secondCard + index;
-        } else if (secondCard == thirdCard) {
-            int index = (int) (Math.random() * 10);
-            thirdCard = thirdCard + index;
+        if (firstCard == secondCard) {
+            secondCard = (secondCard + (int)(Math.random() * 10) + 1) % 22 + 1;
         }
-
-        if (firstCard > 22) {
-            firstCard = firstCard - 22;
-        } else if (secondCard > 22) {
-            secondCard = secondCard - 22;
-        } else if (thirdCard > 22) {
-            thirdCard = thirdCard - 22;
+        if (secondCard == thirdCard) {
+            thirdCard = (thirdCard + (int)(Math.random() * 10) + 1) % 22 + 1;
+        }
+        if (firstCard == thirdCard) {
+            thirdCard = (thirdCard + (int)(Math.random() * 10) + 1) % 22 + 1;
         }
 
         listOfCards = new BufferedReader(new InputStreamReader(Objects.requireNonNull(cards)))
